@@ -1,0 +1,143 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Bootstrap 3 Admin</title>
+    <meta name="generator" content="Bootply" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- about template -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static "about/css/bootstrap.min.css"%}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static "about/css/agency.css"%}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+
+
+<style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+        width:1000%;
+      }
+</style>
+
+<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<link href="{%static "jaehoon/css/bootstrap.min.css"%}" rel="stylesheet">
+<!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link href="{%static "jaehoon/css/styles.css"%}" rel="stylesheet">
+
+<style>
+#footer {
+    background-color: #333333;
+    line-height: 20px;
+    padding: 30px 20px;
+    margin-top: 60px;
+}
+
+.alert-debug {
+    background-color: #eeeeee;
+    border-color: #eeeeee;
+    color: #333;
+}
+
+</style>
+
+<script src="{% static "jquery.toaster.js" %}"></script>
+
+    {% block extra_head %}
+    {% endblock %}
+
+</head>
+<body>
+
+<!--<ul>
+<li> user :{{user}} </li>
+<li> request : {{request}} </li>
+</ul> -->
+
+<!--<ul>
+{%if not user.is_authenticated%}
+    <li><a href="{%url 'login'%}">로그인</a></li>
+    <li>회원가입</li>
+{%else%}
+    <li>{{user}}</li>
+    <li>로그아웃</li>
+{%endif%}
+</ul>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {% if messages %}
+                {% for message in messages %}
+
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+                        {{ message }}
+                    </div>
+                                <script>
+                    $.toaster({
+                        title: '{{ messages.tags }}',
+                        priority: '{{ messages.tags }}',
+                        message: '{{ message }}'
+                    });
+                </script>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>-->
+
+
+    {% block content %}
+    {% endblock %}
+<script src="{% static "jquery-1.11.3.js"%}"></script>
+<script>
+    $(function() {
+        $(".comment_delete").click(function() {
+            if ( confirm("삭제하시겠습니까?") ) {
+                var comment_id = $(this).data("comment-id");
+                var url_id = $(this).data("url");
+
+                $.ajax({
+                    url: url_id,
+                    method: "POST",
+                    dataType: "json"
+                }).fail(function() {
+                    alert("실패!!!");
+                }).done(function(data) {
+                    if (data.status == 'ok'){
+                        alert('성공');
+                        $("#" + comment_id).remove();
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    </script>
+</body>
+</html>

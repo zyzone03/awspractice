@@ -1,0 +1,88 @@
+{%extends "mymap/layout.html"%}
+
+{%block content%}
+
+{%load staticfiles%}
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+<h3> {{post.title}} </h3>
+
+<hr/>
+
+{{post.content}}
+
+<hr/>
+
+{% if post.photo %}
+
+    <img src="{{post.photo.url}}"/>
+
+{% endif %}
+
+
+
+
+<hr/>
+
+<ul>
+
+<form action="{%url 'mymap:comment_new' post.pk%}" method="POST">
+    {%csrf_token%}
+    <table>
+        {{comment_form}}
+    </table>
+    <input type='submit' value='댓글 남기기' class='btn btn-primary'/>
+</form>
+
+<h5> 댓글 목록 </h5>
+{%for comment in post.comment_set.all%}
+    <li id="comment_{{ comment.pk }}">
+    {{ comment.content }} at ({{ comment.created_at }})
+    <a href="{% url "mymap:comment_delete" post.pk comment.pk %}"
+    class="comment_delete"
+    data-url="{%url "mymap:comment_delete" post.pk comment.pk%}"
+    data-comment-id="comment_{{ comment.pk }}"> delete</a>
+   </li>
+{%empty%}
+    <li> 등록된 댓글이 없습니다. </li>
+{%endfor%}
+</ul>
+
+<hr>
+<a href="/mymap/" class="btn btn-default"> 목록으로 </a>
+<a href="edit/" class="btn btn-default"> 수정하기 </a>
+<a href="{%url 'mymap:comment_new' post.pk%}" class="btn btn-default"> 댓글달기 </a>
+<a href="{% url 'mymap:delete' post.pk %}" class='btn btn-default'> 삭제하기 </a>
+
+<script src="{% static "jquery.toaster.js" %}"></script>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {% if messages %}
+                {% for message in messages %}
+                <!--
+                    <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+                        {{ message }}
+                    </div>
+                -->
+                <script>
+                    $.toaster({
+                        title: '{{ messages.tags }}',
+                        priority: '{{ messages.tags }}',
+                        message: '{{ message }}'
+                    });
+                </script>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+</ul>
+</body>
+
+{%endblock%}
