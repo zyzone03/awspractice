@@ -101,9 +101,9 @@ USE_TZ = True
 
 from django.contrib.messages import constants as message_constants
 
-MESSAGE_TAGS = {
-    message_constants.ERROR: 'danger'
-}
+# MESSAGE_TAGS = {
+#     message_constants.ERROR: 'danger'
+# }
 MESSAGE_LEVEL = message_constants.DEBUG  # default : INFO
 
 # Static files (CSS, JavaScript, Images)
